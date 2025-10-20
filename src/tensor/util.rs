@@ -12,7 +12,7 @@ impl<T:Copy + Num> Tensor<T> {
     pub fn full(shape: &[usize], value: T) -> Self {
         let size = shape.iter().product();
         let data = vec![value; size];
-        let strides = Self::calc_strides(shape);
+        let strides = Self::calc_contiguous_strides(shape);
         let data = std::sync::Arc::new(data);
         Self { data, shape: shape.to_vec(), strides }
     }

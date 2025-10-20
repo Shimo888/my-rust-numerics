@@ -98,6 +98,12 @@ impl<T: Copy + Num> Tensor<T>{
         let data = Arc::new(data);
         Ok(Tensor{data, shape: self.shape.clone(), strides: self.strides.clone()})
     }
+    
+    /// テンソルの縮約 
+    /// axesで指定した軸を縮約する
+    pub fn tensor_dot(tensor1 : Tensor<T>, tensor2 : Tensor<T>, axes1: &[usize], axes2: &[usize]) -> Result<Tensor<T>, TensorError> {
+        todo!()
+    }
 }
 
 /// + 演算子のオーバーロード

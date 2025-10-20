@@ -34,7 +34,7 @@ impl<T: Copy + Num> Tensor<T> {
         if data.len() != expected_size {
             return Err(TensorError::ShapeMismatch)
         }
-        let strides = Self::calc_strides(&shape);
+        let strides = Self::calc_contiguous_strides(&shape);
         let data = Arc::new(data);
         Ok(Self { data, shape, strides })
     }
@@ -63,7 +63,7 @@ impl<T: Copy + Num> Tensor<T> {
 
     /// 各次元のストライドを計算
     /// (ex) Shape: [3, 4, 5] -> Strides: [4 * 5, 5, 1]
-    pub(super) fn calc_strides(shape: &[usize]) -> Vec<usize> {
+    pub(super) fn calc_contiguous_strides(shape: &[usize]) -> Vec<usize> {
         let mut strides = vec![1; shape.len()];
         for i in (0..shape.len() - 1).rev() {
             strides[i] = strides[i + 1] * shape[i + 1];
@@ -77,7 +77,7 @@ mod tests{
     #[test]
     fn test_calc_strides(){
         let shape = vec![3, 4, 5];
-        let strides = crate::tensor::core::Tensor::<i32>::calc_strides(&shape);
+        let strides = crate::tensor::core::Tensor::<i32>::calc_contiguous_strides(&shape);
         assert_eq!(strides, vec![20, 5, 1]);
     }
 }
