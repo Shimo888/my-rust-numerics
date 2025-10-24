@@ -74,7 +74,7 @@ impl<T: Copy + Num> Tensor<T> {
         }
         
         let mut new_data = vec![T::zero(); self.data.len()];
-        let mut new_strides = Self::calc_contiguous_strides(&self.shape);
+        let new_strides = Self::calc_contiguous_strides(&self.shape);
         
         // 全要素を新しいデータ配列にコピーして新しいストライドを適用
         for (indices, val) in self.iter() {
