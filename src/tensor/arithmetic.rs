@@ -119,6 +119,14 @@ impl<T: Copy + Num> Tensor<T>{
     /// println!("{:?}", result.shape()); // [6,3]
     /// assert_eq!(result, Tensor::full(&[6,3], 20))
     /// ```
+    /// テンソル積も計算可能である
+    /// ``` 
+    /// use my_rust_numerics::Tensor;
+    /// let tensor1 = Tensor::new(vec![1, 2], vec![2]).unwrap(); // shape: [2]
+    /// let tensor2 = Tensor::new(vec![3, 4], vec![2]).unwrap(); // shape: [2]
+    /// let result = Tensor::tensor_dot(&tensor1, &tensor2, &[], &[]).unwrap(); // 縮約軸なし
+    /// assert_eq!(result, Tensor::new(vec![3, 4, 6, 8], vec![2, 2]).unwrap()); // shape: [2,2]
+    /// ```
     pub fn tensor_dot(tensor1 : &Tensor<T>, tensor2 : &Tensor<T>, axes1: &[usize], axes2: &[usize]) -> Result<Tensor<T>, TensorError> {
         // 1. 縮約する軸のチェック
         // 1.1 縮約する軸の数が一致すること
